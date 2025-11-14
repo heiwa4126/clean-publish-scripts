@@ -1,7 +1,7 @@
 {
 	"name": "@heiwa4126/clean-publish-scripts",
 	"version": "0.0.1-rc.0",
-	"description": "TypeScript hello world library with dual ES modules/CommonJS support. Features GitHub Actions trusted publishing to npmjs with Sigstore attestation.",
+	"description": "A simple CLI tool to clean package.json during npm publish by removing development-specific fields like scripts, workspaces, and private.",
 	"type": "module",
 	"main": "./dist/core.cjs",
 	"module": "./dist/core.js",
@@ -33,21 +33,19 @@
 		"format": "biome format --write .",
 		"format:full": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
 		"smoke-test": "node smoke-test/st.mjs && node smoke-test/st.cjs && tsx smoke-test/st.ts && node dist/main.js --help",
-		"prepack": "node dist/main.js",
+		"prepack": "node dist/main.js -c",
 		"postpack": "node dist/main.js -r"
 	},
 	"keywords": [
-		"hello-world",
-		"example",
-		"demo",
-		"typescript",
-		"esm",
-		"commonjs",
+		"npm",
+		"publish",
+		"package.json",
+		"clean",
+		"prepack",
+		"postpack",
 		"cli",
-		"learning",
-		"sigstore",
-		"trusted-publishing",
-		"github-actions"
+		"typescript",
+		"build-tools"
 	],
 	"author": "heiwa4126 <heiwa4126@gmail.com>",
 	"repository": {
@@ -66,7 +64,6 @@
 	"engines": {
 		"node": ">=18.0.0"
 	},
-	"dependencies": {},
 	"workspaces": [
 		"."
 	]

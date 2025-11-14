@@ -5,30 +5,64 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
 
-## 仕様
+A simple CLI tool to clean package.json during npm publish by removing development-specific fields like `scripts`, `workspaces`, and `private`.
 
-インストールは
+## Installation
 
 ```sh
-npm add -D clean-publish-scripts
+npm install -D @heiwa4126/clean-publish-scripts
 ```
 
-挙動は、現在 run-scripts に
+## Usage
+
+Replace complex npm scripts:
+
+**Before:**
 
 ```json
-"scripts": {
-	"prepack": "cp package.json package.json.bak && node scripts/clean-pkg.mjs",
-	"postpack": "mv package.json.bak package.json"
+{
+  "scripts": {
+    "prepack": "cp package.json package.json.bak && scripts/something-cleaning-package.sh",
+    "postpack": "mv package.json.bak package.json"
+  }
 }
 ```
 
-と書かれているのを
+**After:**
 
 ```json
-"scripts": {
-	"prepack": "clean-publish-scripts",
-	"postpack": "clean-publish-scripts -r"
+{
+  "scripts": {
+    "prepack": "clean-publish-scripts -c",
+    "postpack": "clean-publish-scripts -r"
+  }
 }
 ```
 
-と書けるようにしたい
+## How it works
+
+- `clean-publish-scripts -c`: Creates a backup of package.json and removes `scripts`, `workspaces`, and `private` fields
+- `clean-publish-scripts -r`: Restores package.json from the backup
+
+## Options
+
+- `-c, --clean`: Clean package.json (create backup and remove dev fields)
+- `-r, --restore`: Restore package.json from backup
+- `-h, --help`: Show help message
+
+## TODO
+
+- Add option to specify custom backup filename (currently hardcoded to `package.json.bak`)
+
+## License
+
+MIT
+
+## Development
+
+```sh
+pnpm i
+#
+pnpm run build # lint, test, build and smoke test
+pnpm pack # prepack, pack and postpack
+```
