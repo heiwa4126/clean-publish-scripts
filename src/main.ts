@@ -5,7 +5,7 @@ import { cleanPackage, restorePackage } from "./core.js";
 
 function main() {
 	const args = process.argv;
-	
+
 	if (args.includes("-h") || args.includes("--help")) {
 		console.log(`Usage: clean-publish-scripts [options]
 
@@ -18,7 +18,7 @@ Examples:
   clean-publish-scripts -r  # Restore package.json (for postpack)`);
 		return;
 	}
-	
+
 	if (args.includes("-r")) {
 		restorePackage();
 	} else {
