@@ -34,7 +34,9 @@
 		"format:full": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
 		"smoke-test": "node smoke-test/st.mjs && node smoke-test/st.cjs && tsx smoke-test/st.ts && node dist/main.js --help",
 		"prepack": "node dist/main.js -c",
-		"postpack": "node dist/main.js -r"
+		"postpack": "node dist/main.js -r",
+		"version:prerelase": "npm version prerelease --preid=rc",
+		"version:patch": "npm version patch"
 	},
 	"keywords": [
 		"npm",

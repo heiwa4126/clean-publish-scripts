@@ -8,8 +8,5 @@ export default defineConfig({
 	splitting: false,
 	sourcemap: true,
 	clean: true,
-	dts: {
-		resolve: true,
-		entry: ["src/main.ts", "src/core.ts"],
-	},
+	dts: true,
 });
