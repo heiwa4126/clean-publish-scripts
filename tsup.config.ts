@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-	entry: ["src/main.ts", "src/hello.ts"],
+	entry: ["src/main.ts", "src/core.ts"],
 	format: ["esm", "cjs"],
 	outDir: "dist",
 	bundle: false,
@@ -10,11 +10,6 @@ export default defineConfig({
 	clean: true,
 	dts: {
 		resolve: true,
-		entry: ["src/main.ts", "src/hello.ts"],
+		entry: ["src/main.ts", "src/core.ts"],
 	},
-	// outExtension({ format }) {
-	// 	return {
-	// 		js: format === "cjs" ? ".cjs" : ".js",
-	// 	};
-	// },
 });

@@ -1,5 +1,16 @@
 #!/usr/bin/env node
 
-import { hello } from "./hello.js";
+import process from "node:process";
+import { cleanPackage, restorePackage } from "./core.js";
 
-console.log(hello());
+function main() {
+	const isRestore = process.argv.includes("-r");
+
+	if (isRestore) {
+		restorePackage();
+	} else {
+		cleanPackage();
+	}
+}
+
+main();

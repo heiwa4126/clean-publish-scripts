@@ -1,20 +1,20 @@
 {
 	"name": "@heiwa4126/clean-publish-scripts",
-	"version": "0.0.2",
+	"version": "0.0.1-rc.0",
 	"description": "TypeScript hello world library with dual ES modules/CommonJS support. Features GitHub Actions trusted publishing to npmjs with Sigstore attestation.",
 	"type": "module",
-	"main": "./dist/hello.cjs",
-	"module": "./dist/hello.js",
-	"types": "./dist/hello.d.ts",
+	"main": "./dist/core.cjs",
+	"module": "./dist/core.js",
+	"types": "./dist/core.d.ts",
 	"exports": {
 		".": {
-			"types": "./dist/hello.d.ts",
-			"import": "./dist/hello.js",
-			"require": "./dist/hello.cjs"
+			"types": "./dist/core.d.ts",
+			"import": "./dist/core.js",
+			"require": "./dist/core.cjs"
 		}
 	},
 	"bin": {
-		"heiwa4126-clean-publish-scripts": "dist/main.js"
+		"clean-publish-scripts": "dist/main.js"
 	},
 	"files": [
 		"dist/**/*.js",
