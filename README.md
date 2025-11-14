@@ -63,6 +63,6 @@ MIT
 ```sh
 pnpm i
 #
-pnpm run build # lint, test, build and smoke test
+pnpm run prepublishOnly # lint, test, build and smoke test
 pnpm pack # prepack, pack and postpack
 ```

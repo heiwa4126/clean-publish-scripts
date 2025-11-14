@@ -43,7 +43,11 @@ jobs:
       - name: Get pnpm store directory
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+          if ! STORE_PATH=$(pnpm store path --silent); then
+            echo "Error: Failed to get pnpm store path"
+            exit 1
+          fi
+          echo "STORE_PATH=$STORE_PATH" >> "$GITHUB_ENV"
 
       - name: Setup pnpm cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0

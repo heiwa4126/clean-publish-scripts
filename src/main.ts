@@ -3,10 +3,19 @@
 import process from "node:process";
 import { cleanPackage, restorePackage } from "./core.js";
 
-function main() {
-	const args = process.argv;
+function executeWithErrorHandling(fn: () => void): void {
+	try {
+		fn();
+	} catch (error) {
+		console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+		process.exit(1);
+	}
+}
 
-	if (args.includes("-h") || args.includes("--help") || args.length === 2) {
+function main(): void {
+	const args = process.argv.slice(2);
+
+	if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
 		console.log(`Usage: clean-publish-scripts [options]
 
 Options:
@@ -20,10 +29,13 @@ Examples:
 		return;
 	}
 
-	if (args.includes("-r") || args.includes("--restore")) {
-		restorePackage();
-	} else if (args.includes("-c") || args.includes("--clean")) {
-		cleanPackage();
+	const hasRestore = args.includes("-r") || args.includes("--restore");
+	const hasClean = args.includes("-c") || args.includes("--clean");
+
+	if (hasRestore) {
+		executeWithErrorHandling(restorePackage);
+	} else if (hasClean) {
+		executeWithErrorHandling(cleanPackage);
 	} else {
 		console.error("Error: Invalid option. Use -h for help.");
 		process.exit(1);
