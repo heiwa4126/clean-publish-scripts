@@ -8,23 +8,27 @@
 ## 仕様
 
 インストールは
+
 ```sh
 npm add -D clean-publish-scripts
 ```
 
-挙動は、現在run-scriptsに
+挙動は、現在 run-scripts に
 
 ```json
-	"scripts": {
-		"prepack": "cp package.json package.json.bak && node scripts/clean-pkg.mjs",
-		"postpack": "mv package.json.bak package.json"
-	}
+"scripts": {
+	"prepack": "cp package.json package.json.bak && node scripts/clean-pkg.mjs",
+	"postpack": "mv package.json.bak package.json"
+}
 ```
+
 と書かれているのを
+
 ```json
-	"scripts": {
-		"prepack": "clean-publish-scripts",
-		"postpack": "clean-publish-scripts -r"
-	}
+"scripts": {
+	"prepack": "clean-publish-scripts",
+	"postpack": "clean-publish-scripts -r"
+}
 ```
+
 と書けるようにしたい
