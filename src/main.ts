@@ -16,7 +16,11 @@ function main(): void {
 	const args = process.argv.slice(2);
 
 	if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
-		console.log(`Usage: clean-publish-scripts [options]
+		console.log(`A CLI tool to clean package.json during npm publish by removing development-specific fields.
+
+Usage: clean-publish-scripts [options]
+
+Running without options shows this help message.
 
 Options:
   -c, --clean   Clean package.json (create backup and remove dev fields)

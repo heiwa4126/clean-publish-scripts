@@ -15,6 +15,10 @@ npm install -D @heiwa4126/clean-publish-scripts
 
 ## Usage
 
+This tool simplifies npm package publishing by temporarily removing development-specific fields from package.json during the publish process.
+
+Running the command without options shows the help message (same as `-h` or `--help`).
+
 Replace complex npm scripts:
 
 **Before:**
