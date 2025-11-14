@@ -52,7 +52,7 @@
 	"author": "heiwa4126 <heiwa4126@gmail.com>",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/heiwa4126/heiwa4126-clean-publish-scripts.git"
+		"url": "git+https://github.com/heiwa4126/clean-publish-scripts.git"
 	},
 	"license": "MIT",
 	"devDependencies": {
