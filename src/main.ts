@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import process from "node:process";
+import pkg from "../package.json" with { type: "json" };
 import { cleanPackage, restorePackage } from "./core.js";
 
 function executeWithErrorHandling(fn: () => void): void {
@@ -16,7 +17,10 @@ function main(): void {
 	const args = process.argv.slice(2);
 
 	if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
-		console.log(`A CLI tool to clean package.json during npm publish by removing development-specific fields.
+		console.log(
+			`Version ${pkg.version}
+
+A CLI tool to clean package.json during npm publish by removing development-specific fields.
 
 Usage: clean-publish-scripts [options]
 
@@ -29,7 +33,8 @@ Options:
 
 Examples:
   clean-publish-scripts -c  # Clean package.json (for prepack)
-  clean-publish-scripts -r  # Restore package.json (for postpack)`);
+  clean-publish-scripts -r  # Restore package.json (for postpack)`,
+		);
 		return;
 	}
 
