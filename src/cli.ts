@@ -13,28 +13,39 @@ function executeWithErrorHandling(fn: () => void): void {
 	}
 }
 
-function main(): void {
-	const args = process.argv.slice(2);
-
-	if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
-		console.log(
-			`Version ${pkg.version}
-
-A CLI tool to clean package.json during npm publish by removing development-specific fields.
+function printHelp() {
+	console.log(
+		`A CLI tool to clean package.json during npm publish by removing development-specific fields.
 
 Usage: clean-publish-scripts [options]
 
 Running without options shows this help message.
 
 Options:
-  -c, --clean   Clean package.json (create backup and remove dev fields)
-  -r, --restore Restore package.json from backup
-  -h, --help    Show this help message
+  -c, --clean    Clean package.json (create backup and remove dev fields)
+  -r, --restore  Restore package.json from backup
+  -h, --help     Show this help message
+  -v, --version  Show version
 
 Examples:
   clean-publish-scripts -c  # Clean package.json (for prepack)
   clean-publish-scripts -r  # Restore package.json (for postpack)`,
-		);
+	);
+}
+
+function printVersion() {
+	console.log(String(pkg.version));
+}
+
+function main(): void {
+	const args = process.argv.slice(2);
+
+	if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
+		printHelp();
+		return;
+	}
+	if (args.includes("-v") || args.includes("--version")) {
+		printVersion();
 		return;
 	}
 

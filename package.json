@@ -24,6 +24,7 @@
 	],
 	"scripts": {
 		"build": "tsup",
+		"cli": "node dist/cli.js",
 		"test": "vitest run",
 		"test:run": "vitest run",
 		"test:watch": "vitest",
@@ -32,7 +33,6 @@
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"format:full": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
-		"cli": "node dist/cli.js --help",
 		"smoke-test": "node smoke-test/st.mjs && node smoke-test/st.cjs && tsx smoke-test/st.ts && npm run cli",
 		"prepack": "node dist/cli.js -c",
 		"postpack": "node dist/cli.js -r",
