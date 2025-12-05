@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { cleanPackage, restorePackage } from "../src/core.js";
+import { cleanPackage, restorePackage } from "../src/lib.js";
 
 describe("core", () => {
 	const testDir = "tmp";

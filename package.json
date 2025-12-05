@@ -3,18 +3,18 @@
 	"version": "0.0.1",
 	"description": "A simple CLI tool to clean package.json during npm publish by removing development-specific fields like scripts, workspaces, and private.",
 	"type": "module",
-	"main": "./dist/core.cjs",
-	"module": "./dist/core.js",
-	"types": "./dist/core.d.ts",
+	"main": "./dist/lib.cjs",
+	"module": "./dist/lib.js",
+	"types": "./dist/lib.d.ts",
 	"exports": {
 		".": {
-			"types": "./dist/core.d.ts",
-			"import": "./dist/core.js",
-			"require": "./dist/core.cjs"
+			"types": "./dist/lib.d.ts",
+			"import": "./dist/lib.js",
+			"require": "./dist/lib.cjs"
 		}
 	},
 	"bin": {
-		"clean-publish-scripts": "dist/main.js"
+		"clean-publish-scripts": "dist/cli.js"
 	},
 	"files": [
 		"dist/**/*.js",
@@ -28,16 +28,19 @@
 		"test:run": "vitest run",
 		"test:watch": "vitest",
 		"clean": "rm -rf dist",
-		"prepublishOnly": "pnpm run lint && pnpm run test && pnpm run clean && pnpm run build && pnpm run smoke-test",
+		"prepublishOnly": "pnpm audit && pnpm run lint && pnpm run test && pnpm run clean && pnpm run build && pnpm run smoke-test",
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"format:full": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
-		"cli": "node dist/main.js --help",
+		"cli": "node dist/cli.js --help",
 		"smoke-test": "node smoke-test/st.mjs && node smoke-test/st.cjs && tsx smoke-test/st.ts && npm run cli",
-		"prepack": "node dist/main.js -c",
-		"postpack": "node dist/main.js -r",
+		"prepack": "node dist/cli.js -c",
+		"postpack": "node dist/cli.js -r",
 		"version:prerelase": "npm version prerelease --preid=rc",
-		"version:patch": "npm version patch"
+		"version:patch": "npm version patch",
+		"trivy": "trivy config . && trivy fs --exit-code 1 --severity HIGH,CRITICAL .",
+		"sbom": "trivy fs --scanners vuln --format spdx-json --output sbom.spdx.json .",
+		"osv-scan": "osv-scanner ."
 	},
 	"keywords": [
 		"npm",
@@ -57,12 +60,12 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.6",
+		"@biomejs/biome": "^2.3.8",
 		"@types/node": "^24.10.1",
 		"tsup": "^8.5.1",
-		"tsx": "^4.20.6",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
-		"vitest": "^4.0.10"
+		"vitest": "^4.0.15"
 	},
 	"engines": {
 		"node": ">=18.0.0"

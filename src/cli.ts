@@ -2,7 +2,7 @@
 
 import process from "node:process";
 import pkg from "../package.json" with { type: "json" };
-import { cleanPackage, restorePackage } from "./core.js";
+import { cleanPackage, restorePackage } from "./lib.js";
 
 function executeWithErrorHandling(fn: () => void): void {
 	try {
