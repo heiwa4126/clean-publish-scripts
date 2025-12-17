@@ -1,12 +1,6 @@
 {
 	"root": true,
-	"assist": {
-		"actions": {
-			"source": {
-				"organizeImports": "off"
-			}
-		}
-	},
+	"assist": { "actions": { "source": { "organizeImports": "off" } } },
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
@@ -14,8 +8,7 @@
 		"root": "."
 	},
 	"files": {
-		"ignoreUnknown": true,
-		"includes": ["**", "!**/*.html", "!**/*.htm"]
+		"ignoreUnknown": true
 	},
 	"json": {
 		"parser": {
