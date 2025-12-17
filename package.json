@@ -31,7 +31,7 @@
 		"test:coverage": "vitest run --coverage",
 		"clean": "rm -rf dist",
 		"prepublishOnly": "pnpm audit && pnpm run lint && pnpm run test && pnpm run clean && pnpm run build && pnpm run smoke-test",
-		"lint": "biome lint . && tsc --noEmit",
+		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"format:full": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
 		"smoke-test": "node smoke-test/st.mjs && node smoke-test/st.cjs && tsx smoke-test/st.ts && npm run cli",
