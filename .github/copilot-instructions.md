@@ -7,16 +7,16 @@ This is a TypeScript CLI tool that simplifies npm package publishing by cleaning
 ## Architecture
 
 - **Language**: TypeScript (ES modules)
-- **Build Tool**: tsup
+- **Build Tool**: tsdown
 - **Test Framework**: vitest
 - **Linter**: biome
 - **Package Manager**: pnpm
 
 ## Key Files
 
-- `src/core.ts`: Core functionality (cleanPackage, restorePackage)
-- `src/main.ts`: CLI entry point with argument parsing
-- `test/core.test.ts`: Unit tests using temporary directories
+- `src/lib.ts`: Core functionality (cleanPackage, restorePackage)
+- `src/cli.ts`: CLI entry point with argument parsing
+- `test/lib.test.ts`: Unit tests using temporary directories
 - `package.json`: Dual ESM/CJS exports with CLI bin entry
 
 ## Development Guidelines
