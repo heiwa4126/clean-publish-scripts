@@ -52,7 +52,34 @@ Replace complex npm scripts:
 
 - `-c, --clean`: Clean package.json (create backup and remove dev fields)
 - `-r, --restore`: Restore package.json from backup
+- `-n, --namespace <scope>`: Remove dependencies matching `@<scope>/*` pattern (use with `--clean`)
 - `-h, --help`: Show help message
+
+### Namespace Option
+
+The `--namespace` option is useful when publishing packages that bundle dependencies from private registries (like GitHub Packages). It removes all dependencies matching the specified namespace pattern from `dependencies`, `devDependencies`, `peerDependencies`, and `optionalDependencies`.
+
+**Example:**
+
+```json
+{
+  "scripts": {
+    "prepack": "clean-publish-scripts -c --namespace myorg",
+    "postpack": "clean-publish-scripts -r"
+  }
+}
+```
+
+This will remove all dependencies matching `@myorg/*` pattern during the pack process. After restore, all dependencies including the namespace ones are restored from the backup.
+
+**Use case:**
+
+When you bundle dependencies from a private npm registry (like GitHub Packages) into your package, you want to:
+
+1. Bundle the private packages into your distribution
+2. Remove them from package.json dependencies so users don't need access to your private registry
+
+**Note:** Specify only the scope name without the `@` prefix. For example, use `myorg` instead of `@myorg`.
 
 ## TODO
 

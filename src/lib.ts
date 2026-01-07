@@ -10,6 +10,10 @@ const PACKAGE_FILE = "package.json";
  * the `scripts`, `workspaces`, and `private` fields from it. The cleaned version
  * is written back to the package.json file with tab indentation.
  *
+ * @param namespace - Optional namespace to remove from dependencies (without @ prefix).
+ *                    When specified, removes all dependencies matching "@namespace/*" pattern
+ *                    from dependencies, devDependencies, peerDependencies, and optionalDependencies.
+ *
  * @throws {Error} If the package.json file cannot be read, backed up, or written.
  * The error message includes details about the underlying failure.
  *
@@ -17,8 +21,9 @@ const PACKAGE_FILE = "package.json";
  * - A backup is created at the path specified by `BACKUP_FILE`
  * - The output uses tab characters for indentation
  * - Fields removed: `scripts`, `workspaces`, `private`
+ * - If namespace is provided, dependencies matching "@namespace/*" are also removed
  */
-export function cleanPackage() {
+export function cleanPackage(namespace?: string) {
 	try {
 		// Create backup
 		fs.copyFileSync(PACKAGE_FILE, BACKUP_FILE);
@@ -28,6 +33,28 @@ export function cleanPackage() {
 		delete pkg.scripts;
 		delete pkg.workspaces;
 		delete pkg.private;
+
+		// Remove namespace dependencies if specified
+		if (namespace) {
+			const prefix = `@${namespace}/`;
+			const depSections = [
+				"dependencies",
+				"devDependencies",
+				"peerDependencies",
+				"optionalDependencies",
+			] as const;
+
+			for (const section of depSections) {
+				if (pkg[section]) {
+					for (const key of Object.keys(pkg[section])) {
+						if (key.startsWith(prefix)) {
+							delete pkg[section][key];
+						}
+					}
+				}
+			}
+		}
+
 		fs.writeFileSync(PACKAGE_FILE, `${JSON.stringify(pkg, null, "\t")}\n`);
 	} catch (error) {
 		throw new Error(

@@ -22,14 +22,17 @@ Usage: clean-publish-scripts [options]
 Running without options shows this help message.
 
 Options:
-  -c, --clean    Clean package.json (create backup and remove dev fields)
-  -r, --restore  Restore package.json from backup
-  -h, --help     Show this help message
-  -v, --version  Show version
+  -c, --clean              Clean package.json (create backup and remove dev fields)
+  -r, --restore            Restore package.json from backup
+  -n, --namespace <scope>  Remove dependencies matching @<scope>/* pattern
+                           (use with --clean, without @ prefix)
+  -h, --help               Show this help message
+  -v, --version            Show version
 
 Examples:
-  clean-publish-scripts -c  # Clean package.json (for prepack)
-  clean-publish-scripts -r  # Restore package.json (for postpack)`,
+  clean-publish-scripts -c                    # Clean package.json (for prepack)
+  clean-publish-scripts -c --namespace myorg  # Clean and remove @myorg/* dependencies
+  clean-publish-scripts -r                    # Restore package.json (for postpack)`,
 	);
 }
 
@@ -52,10 +55,23 @@ function main(): void {
 	const hasRestore = args.includes("-r") || args.includes("--restore");
 	const hasClean = args.includes("-c") || args.includes("--clean");
 
+	// Parse --namespace option
+	let namespace: string | undefined;
+	const namespaceIndex = args.findIndex((arg) => arg === "-n" || arg === "--namespace");
+	if (namespaceIndex !== -1 && args[namespaceIndex + 1]) {
+		namespace = args[namespaceIndex + 1];
+		if (namespace?.includes("@")) {
+			console.error(
+				"Error: namespace should not include '@' symbol. Use 'myorg' instead of '@myorg'.",
+			);
+			process.exit(1);
+		}
+	}
+
 	if (hasRestore) {
 		executeWithErrorHandling(restorePackage);
 	} else if (hasClean) {
-		executeWithErrorHandling(cleanPackage);
+		executeWithErrorHandling(() => cleanPackage(namespace));
 	} else {
 		console.error("Error: Invalid option. Use -h for help.");
 		process.exit(1);
