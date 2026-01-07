@@ -43,7 +43,7 @@
 		"ver": "pnpm pkg get version",
 		"trivy": "trivy config . && trivy fs --exit-code 1 --severity HIGH,CRITICAL .",
 		"sbom": "trivy fs --scanners vuln --format spdx-json --output sbom.spdx.json .",
-		"osv-scan": "osv-scanner .",
+		"osv-scan": "osv-scanner scan -L pnpm-lock.yaml",
 		"cloc": "cloc $(git ls-files|grep -Fv pnpm-lock.yaml)",
 		"lizard": "lizard -EDuplicate -w .",
 		"lizard:all": "lizard -EDuplicate .",
