@@ -1,6 +1,6 @@
 {
 	"name": "@heiwa4126/clean-publish-scripts",
-	"version": "0.0.5-alpha.1",
+	"version": "0.0.5-alpha.2",
 	"description": "A simple CLI tool to clean package.json during npm publish by removing development-specific fields like scripts, workspaces, and private.",
 	"type": "module",
 	"main": "./dist/lib.cjs",
