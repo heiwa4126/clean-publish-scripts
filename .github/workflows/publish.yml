@@ -20,7 +20,7 @@ jobs:
   osv-scan:
     if: github.repository_owner == github.actor
     ## Only run if pushed by repository owner
-    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@375a0e8ebdc98e99b02ac4338a724f5750f21213 # v2.3.1
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@c5996e0193a3df57d695c1b8a1dec2a4c62e8730 # v2.3.3
     permissions:
       actions: read # reusable workflow の実行に必要
       security-events: write # 脆弱性スキャン結果(SARIF形式)を  GitHub の Security タブにアップロードするために必要
@@ -39,62 +39,7 @@ jobs:
       # contents: write # for releases
       id-token: write # OIDC に必須
     steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Build and Publish
+        uses: heiwa4126/reusable-workflows/build-pnpm-package-and-publish@663ddef519c0033f16364f061210aaf4547515d2 # v0.0.7
         with:
-          fetch-depth: 1
-
-      # - name: Super-linter
-      #   uses: super-linter/super-linter@d5b0a2ab116623730dd094f15ddc1b6b25bf7b99 # v8.3.2
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     DEFAULT_BRANCH: ${{ github.ref_name }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
-        with:
-          version: latest
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
-        with:
-          node-version: "lts/*"
-          cache: pnpm
-
-      # - run: npm install -g npm@latest
-      # 最近はおおむね不要. nodeの最新LTS版バンドルnpmで十分
-
-      - name: "INFO: Show versions of Node.js, npm, and pnpm"
-        run: node -v && npm -v && pnpm -v
-
-      - name: "INFO: Show .npmrc (if exists)"
-        # actions/setup-node で自動生成される .npmrc の中身を確認する
-        run: test -n "${NPM_CONFIG_USERCONFIG}" && test -f "${NPM_CONFIG_USERCONFIG}" && cat "${NPM_CONFIG_USERCONFIG}" || echo "NPM_CONFIG_USERCONFIG not found"
-        ## 今回は registry-url: も scope: も指定していないので .npmrc は自動生成されない
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # - run: npm run build --if-present
-      # - run: npm test
-      ## このプロジェクトでは prepublishOnly に書いてあるので不要
-
-      - name: Publish to npm via OIDC (Trusted publishing)
-        run: npm publish --access public $([[ $GITHUB_REF_NAME == *-* ]] && echo "--tag dev")
-        env:
-          NODE_AUTH_TOKEN: "" # 念のため
-
-# # おまけ。releases にもtgzをアップロードする
-# - name: build package
-#   run: pnpm run build
-# - name: Pack package tarball
-#   run: pnpm pack
-# - name: Create GitHub Release
-#   uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
-#   with:
-#     files: ./*.tgz
-#     generate_release_notes: true
-#     prerelease: ${{ contains(github.ref_name, '-') }}
-#   env:
-#     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          checkout: true
