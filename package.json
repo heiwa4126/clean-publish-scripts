@@ -2,6 +2,32 @@
 	"name": "@heiwa4126/clean-publish-scripts",
 	"version": "0.0.5",
 	"description": "A simple CLI tool to clean package.json during npm publish by removing development-specific fields like scripts, workspaces, and private.",
+	"keywords": [
+		"build-tools",
+		"clean",
+		"cli",
+		"npm",
+		"package.json",
+		"postpack",
+		"prepack",
+		"publish",
+		"typescript"
+	],
+	"license": "MIT",
+	"author": "heiwa4126 <heiwa4126@gmail.com>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/heiwa4126/clean-publish-scripts.git"
+	},
+	"bin": {
+		"clean-publish-scripts": "dist/cli.js"
+	},
+	"files": [
+		"dist/**/*.js",
+		"dist/**/*.cjs",
+		"dist/**/*.d.ts",
+		"!dist/**/*.map"
+	],
 	"type": "module",
 	"main": "./dist/lib.cjs",
 	"module": "./dist/lib.js",
@@ -13,15 +39,6 @@
 			"require": "./dist/lib.cjs"
 		}
 	},
-	"bin": {
-		"clean-publish-scripts": "dist/cli.js"
-	},
-	"files": [
-		"dist/**/*.js",
-		"dist/**/*.cjs",
-		"dist/**/*.d.ts",
-		"!dist/**/*.map"
-	],
 	"scripts": {
 		"preinstall": "pnpm audit",
 		"build": "tsdown",
@@ -32,9 +49,11 @@
 		"test:coverage": "vitest run --coverage",
 		"clean": "rm -rf dist",
 		"prepublishOnly": "run-s lint test clean build smoke-test",
-		"lint": "biome lint .",
-		"format": "biome format --write .",
-		"format:all": "pnpm pkg fix --loglevel=error && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
+		"format": "oxfmt",
+		"lint": "oxlint",
+		"check": "oxfmt && oxlint --fix",
+		"format:pkg": "pnpm pkg fix --loglevel=error",
+		"format:all": "run-s format:pkg check",
 		"smoke-test:ems": "node smoke-test/st.mjs",
 		"smoke-test:cjs": "node smoke-test/st.cjs",
 		"smoke-test:ts": "node smoke-test/st.ts",
@@ -50,32 +69,16 @@
 		"lizard:all": "lizard -EDuplicate .",
 		"g": "run-s osv-scan format:all prepublishOnly"
 	},
-	"keywords": [
-		"npm",
-		"publish",
-		"package.json",
-		"clean",
-		"prepack",
-		"postpack",
-		"cli",
-		"typescript",
-		"build-tools"
-	],
-	"author": "heiwa4126 <heiwa4126@gmail.com>",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/heiwa4126/clean-publish-scripts.git"
-	},
-	"license": "MIT",
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.6",
-		"@types/node": "^25.4.0",
-		"@vitest/coverage-v8": "4.0.18",
+		"@types/node": "^25.5.0",
+		"@vitest/coverage-v8": "4.1.2",
 		"npm-run-all2": "^8.0.4",
-		"tsdown": "0.20.3",
+		"oxfmt": "^0.42.0",
+		"oxlint": "^1.57.0",
+		"tsdown": "0.21.5",
 		"tsx": "^4.21.0",
-		"typescript": "^5.9.3",
-		"vitest": "^4.0.18"
+		"typescript": "^6.0.2",
+		"vitest": "^4.1.2"
 	},
 	"engines": {
 		"node": ">=18.0.0"

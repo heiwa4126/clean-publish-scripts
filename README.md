@@ -25,10 +25,10 @@ Replace complex npm scripts:
 
 ```json
 {
-  "scripts": {
-    "prepack": "cp package.json package.json.bak && scripts/something-cleaning-package.sh",
-    "postpack": "mv package.json.bak package.json"
-  }
+	"scripts": {
+		"prepack": "cp package.json package.json.bak && scripts/something-cleaning-package.sh",
+		"postpack": "mv package.json.bak package.json"
+	}
 }
 ```
 
@@ -36,10 +36,10 @@ Replace complex npm scripts:
 
 ```json
 {
-  "scripts": {
-    "prepack": "clean-publish-scripts -c",
-    "postpack": "clean-publish-scripts -r"
-  }
+	"scripts": {
+		"prepack": "clean-publish-scripts -c",
+		"postpack": "clean-publish-scripts -r"
+	}
 }
 ```
 
@@ -63,10 +63,10 @@ The `--namespace` option is useful when publishing packages that bundle dependen
 
 ```json
 {
-  "scripts": {
-    "prepack": "clean-publish-scripts -c --namespace myorg",
-    "postpack": "clean-publish-scripts -r"
-  }
+	"scripts": {
+		"prepack": "clean-publish-scripts -c --namespace myorg",
+		"postpack": "clean-publish-scripts -r"
+	}
 }
 ```
 
