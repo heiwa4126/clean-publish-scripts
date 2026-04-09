@@ -1,5 +1,6 @@
+import assert from "node:assert";
 import fs from "node:fs";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, it } from "node:test";
 import { cleanPackage, restorePackage } from "../src/lib.js";
 
 describe("core", () => {
@@ -27,24 +28,24 @@ describe("core", () => {
 	it("should clean package.json and create backup", () => {
 		cleanPackage();
 
-		expect(fs.existsSync("package.json.bak")).toBe(true);
+		assert.strictEqual(fs.existsSync("package.json.bak"), true);
 
 		const cleaned = JSON.parse(fs.readFileSync("package.json", "utf8"));
-		expect(cleaned.scripts).toBeUndefined();
-		expect(cleaned.workspaces).toBeUndefined();
-		expect(cleaned.private).toBeUndefined();
-		expect(cleaned.name).toBe("test-package");
-		expect(cleaned.dependencies).toEqual({ lodash: "^4.0.0" });
+		assert.strictEqual(cleaned.scripts, undefined);
+		assert.strictEqual(cleaned.workspaces, undefined);
+		assert.strictEqual(cleaned.private, undefined);
+		assert.strictEqual(cleaned.name, "test-package");
+		assert.deepStrictEqual(cleaned.dependencies, { lodash: "^4.0.0" });
 	});
 
 	it("should restore package.json from backup", () => {
 		cleanPackage();
 		restorePackage();
 
-		expect(fs.existsSync("package.json.bak")).toBe(false);
+		assert.strictEqual(fs.existsSync("package.json.bak"), false);
 
 		const restored = JSON.parse(fs.readFileSync("package.json", "utf8"));
-		expect(restored).toEqual(testPackageJson);
+		assert.deepStrictEqual(restored, testPackageJson);
 	});
 
 	it("should remove dependencies matching namespace pattern", () => {
@@ -79,22 +80,22 @@ describe("core", () => {
 		const cleaned = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
 		// @myorg/* dependencies should be removed
-		expect(cleaned.dependencies).toEqual({
+		assert.deepStrictEqual(cleaned.dependencies, {
 			lodash: "^4.0.0",
 			"@otherorg/package-c": "^3.0.0",
 		});
-		expect(cleaned.devDependencies).toEqual({
+		assert.deepStrictEqual(cleaned.devDependencies, {
 			vitest: "^1.0.0",
 		});
-		expect(cleaned.peerDependencies).toEqual({
+		assert.deepStrictEqual(cleaned.peerDependencies, {
 			react: "^18.0.0",
 		});
-		expect(cleaned.optionalDependencies).toEqual({
+		assert.deepStrictEqual(cleaned.optionalDependencies, {
 			fsevents: "^2.0.0",
 		});
 
 		// scripts should also be removed
-		expect(cleaned.scripts).toBeUndefined();
+		assert.strictEqual(cleaned.scripts, undefined);
 	});
 
 	it("should restore all dependencies including namespace ones from backup", () => {
@@ -113,8 +114,8 @@ describe("core", () => {
 		restorePackage();
 
 		const restored = JSON.parse(fs.readFileSync("package.json", "utf8"));
-		expect(restored).toEqual(testPkgWithNamespace);
-		expect(restored.dependencies["@myorg/package-a"]).toBe("^1.0.0");
+		assert.deepStrictEqual(restored, testPkgWithNamespace);
+		assert.strictEqual(restored.dependencies["@myorg/package-a"], "^1.0.0");
 	});
 
 	it("should work normally without namespace option", () => {
@@ -135,11 +136,11 @@ describe("core", () => {
 		const cleaned = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
 		// @myorg/* dependencies should NOT be removed
-		expect(cleaned.dependencies).toEqual({
+		assert.deepStrictEqual(cleaned.dependencies, {
 			"@myorg/package-a": "^1.0.0",
 			lodash: "^4.0.0",
 		});
 		// Only scripts should be removed
-		expect(cleaned.scripts).toBeUndefined();
+		assert.strictEqual(cleaned.scripts, undefined);
 	});
 });

@@ -8,7 +8,7 @@ This is a TypeScript CLI tool that simplifies npm package publishing by cleaning
 
 - **Language**: TypeScript (ES modules)
 - **Build Tool**: tsdown
-- **Test Framework**: vitest
+- **Test Framework**: node:test + node:assert (via tsx)
 - **Linter**: biome
 - **Package Manager**: pnpm
 
@@ -16,7 +16,7 @@ This is a TypeScript CLI tool that simplifies npm package publishing by cleaning
 
 - `src/lib.ts`: Core functionality (cleanPackage, restorePackage)
 - `src/cli.ts`: CLI entry point with argument parsing
-- `test/lib.test.ts`: Unit tests using temporary directories
+- `tests/core.test.ts`: Unit tests using temporary directories
 - `package.json`: Dual ESM/CJS exports with CLI bin entry
 
 ## Development Guidelines
