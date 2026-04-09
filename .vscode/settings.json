@@ -1,3 +1,7 @@
 {
-	"cSpell.words": ["cloc", "myorg", "outbase", "postpack", "prerelase", "Rekor"]
+	"cSpell.words": ["cloc", "myorg", "otherorg", "outbase", "postpack", "prerelase", "Rekor"],
+	"chat.tools.terminal.autoApprove": {
+		"git add": true,
+		"git commit": true
+	}
 }
