@@ -46,6 +46,7 @@
 		"test": "tsx --test tests/**/*.test.ts",
 		"test:run": "tsx --test tests/**/*.test.ts",
 		"test:watch": "tsx --watch --test tests/**/*.test.ts",
+		"test:coverage": "node --import tsx --test --experimental-test-coverage tests/**/*.test.ts",
 		"clean": "rm -rf dist",
 		"prepublishOnly": "run-s lint test clean build smoke-test",
 		"format": "oxfmt",
