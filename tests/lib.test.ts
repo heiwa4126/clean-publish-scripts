@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { afterEach, beforeEach, describe, it } from "node:test";
 import { cleanPackage, restorePackage } from "../src/lib.js";
 
-describe("core", () => {
+describe("lib", () => {
 	const testDir = "tmp";
 	const testPackageJson = {
 		name: "test-package",
