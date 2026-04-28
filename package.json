@@ -47,8 +47,7 @@
 		"test:run": "tsx --test tests/**/*.test.ts",
 		"test:watch": "tsx --watch --test tests/**/*.test.ts",
 		"test:coverage": "node --import tsx --test --experimental-test-coverage tests/**/*.test.ts",
-		"clean": "rm -rf dist",
-		"prepublishOnly": "run-s lint test clean build smoke-test",
+		"prepublishOnly": "run-s lint test build smoke-test",
 		"format": "oxfmt",
 		"lint": "oxlint",
 		"check": "oxfmt && oxlint --fix",
@@ -70,13 +69,13 @@
 		"g": "run-s osv-scan format:all prepublishOnly"
 	},
 	"devDependencies": {
-		"@types/node": "^25.5.2",
+		"@types/node": "^25.6.0",
 		"npm-run-all2": "^8.0.4",
 		"oxfmt": "^0.44.0",
-		"oxlint": "^1.59.0",
+		"oxlint": "^1.61.0",
 		"tsdown": "0.21.7",
 		"tsx": "^4.21.0",
-		"typescript": "^6.0.2"
+		"typescript": "^6.0.3"
 	},
 	"engines": {
 		"node": ">=20.0.0"
